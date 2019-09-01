@@ -211,7 +211,7 @@ class ResourceCollection(object):
         Get all items from the collection, optionally with a custom
         page size and item count limit.
 
-        This method returns an iterable generator which yields
+        This method returns an iterator which returns
         individual resource instances. Example use::
 
             # Iterate through items
@@ -233,7 +233,7 @@ class ResourceCollection(object):
         as parameters to the underlying service operation, which are
         typically used to filter the results.
 
-        This method returns an iterable generator which yields
+        This method returns an iterator which returns
         individual resource instances. Example use::
 
             # Iterate through items

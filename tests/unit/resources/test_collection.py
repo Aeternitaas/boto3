@@ -714,7 +714,7 @@ class TestResourceCollection(BaseTestCase):
         self.assertEqual(next(items).id, 'four')
         self.assertRaises(StopIteration, lambda: next(items))
 
-    def test_iteration_equality(self):
+    def test_all_iteration_equality(self):
         self.collection_def = {
             'request': {
                 'operation' : 'GetFrobs'
@@ -738,22 +738,21 @@ class TestResourceCollection(BaseTestCase):
                 {'Id': 'four'}
             ]
         }
-        collection = self.get_collection()
-        items = collection.all()
+        items = self.get_collection().all()
 
         done = False 
         l1 = []
         while not done:
             try:
-                l1.append(next(items))
+                l1.append(next(items).id)
             except StopIteration:
                 done = True
 
-        collection = self.get_collection()
-        items = collection.all()
+        items = self.get_collection().all()
+        l2 = [item.id for item in items]
 
-        l2 = []
-        for item in items:
-            l2.append(item)
+        items = self.get_collection().all()
+        l3 = [item.id for page in items.pages() for item in page]
 
         self.assertEqual(sorted(l1), sorted(l2))
+        self.assertEqual(sorted(l1), sorted(l3))
